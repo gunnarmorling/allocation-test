@@ -84,7 +84,7 @@ JAVA_VERSIONS=("8.0.462-amzn" "21.0.6-tem" "24.0.2-open" "24.0.2-open")
 # JAVA_VERSIONS=("21.0.6-tem")
 
 export THREADS=$THREADS
-
+export DURATION=$DURATION
 for i in "${!GCS[@]}"; do
     gc="${GCS[i]}"
     java_version="${JAVA_VERSIONS[i]}"

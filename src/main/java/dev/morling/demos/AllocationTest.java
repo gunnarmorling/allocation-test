@@ -22,7 +22,7 @@ public class AllocationTest {
 
     private static Optional<String> JFR_RECORDING = Optional.ofNullable(System.getenv("JFR_RECORDING"));
     private static final int WARMUP_SAMPLES = 10_000;
-    private static final Duration DURATION = Duration.ofSeconds(Integer.valueOf(Optional.ofNullable(System.getenv("THREADS")).orElse("30")));
+    private static final Duration DURATION = Duration.ofSeconds(Integer.valueOf(Optional.ofNullable(System.getenv("DURATION")).orElse("30")));
     private static final int THREADS = Integer.valueOf(Optional.ofNullable(System.getenv("THREADS")).orElse("4"));
     private static final int OUTER_SIZE = Integer.valueOf(Optional.ofNullable(System.getenv("RANDOM_COUNT")).orElse("100"));
     private static final int INNER_SIZE = 1000;
