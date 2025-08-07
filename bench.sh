@@ -92,7 +92,7 @@ for i in "${!GCS[@]}"; do
     echo "Processing GC: $gc, Java Version: $java_version"
 
     sdk use java $java_version
-    name=$(echo $gc)_$(echo $java_version)_$(echo $THREADS)
+    name=$(echo $gc)_$(echo $java_version)_$(echo $THREADS)_$(echo $MEM)
     export JFR_RECORDING=$(echo $name).jfr
     # export RANDOM_COUNT=200
     numactl --physcpubind=0-3 java -cp /Users/gunnarmorling/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:target/classes -Xmx$(echo $MEM)m -Xms$(echo $MEM)m -XX:+Use$(echo $gc)GC dev.morling.demos.AllocationTest > $(echo $name).hdr
