@@ -21,7 +21,7 @@ import jdk.jfr.Recording;
 public class AllocationTest {
 
     private static Optional<String> JFR_RECORDING = Optional.ofNullable(System.getenv("JFR_RECORDING"));
-    private static final int WARMUP_SAMPLES = 10_000;
+    private static final int WARMUP_SAMPLES = 15_000;
     private static final Duration DURATION = Duration.ofSeconds(Integer.valueOf(Optional.ofNullable(System.getenv("DURATION")).orElse("30")));
     private static final int THREADS = Integer.valueOf(Optional.ofNullable(System.getenv("THREADS")).orElse("4"));
     private static final int OUTER_SIZE = Integer.valueOf(Optional.ofNullable(System.getenv("RANDOM_COUNT")).orElse("50"));
@@ -43,8 +43,8 @@ public class AllocationTest {
 
         Recording recording = null;
         if (JFR_RECORDING.isPresent()) {
-        	recording = new Recording(Configuration.getConfiguration("default"));
-        	recording.start();
+            recording = new Recording(Configuration.getConfiguration("default"));
+            recording.start();
         }
 
         for (int t = 0; t < THREADS; t++) {
@@ -78,8 +78,8 @@ public class AllocationTest {
         executor.awaitTermination(60, TimeUnit.SECONDS);
 
         if (JFR_RECORDING.isPresent()) {
-        	recording.stop();
-        	recording.dump(Paths.get(JFR_RECORDING.get()));
+            recording.stop();
+            recording.dump(Paths.get(JFR_RECORDING.get()));
         }
 
         System.err.println(results);

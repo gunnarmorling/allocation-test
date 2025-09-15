@@ -77,8 +77,12 @@ echo "  Threads: $THREADS"
 GCS=("Parallel" "Z" "G1" "Z")
 JAVA_VERSIONS=("8.0.462-amzn" "21.0.6-tem" "24.0.2-open" "24.0.2-open")
 
-# GCS=("Z" "G1" "Z")
-# JAVA_VERSIONS=("21.0.6-tem" "24.0.2-open" "24.0.2-open")
+GCS=("Z" "G1" "Z")
+JAVA_VERSIONS=("21.0.6-tem" "25.ea.34-open" "25.ea.34-open")
+
+GCS=("G1" "Z" "G1" "Z")
+JAVA_VERSIONS=("25.ea.34-open" "25.ea.34-open" "25.ea.34-open" "25.ea.34-open")
+RANDOMS=("100" "100" "500" "500")
 
 # GCS=("Z")
 # JAVA_VERSIONS=("21.0.6-tem")
@@ -89,11 +93,15 @@ export DURATION=$DURATION
 for i in "${!GCS[@]}"; do
     gc="${GCS[i]}"
     java_version="${JAVA_VERSIONS[i]}"
-    echo "Processing GC: $gc, Java Version: $java_version"
+    random_count="${RANDOMS[i]}"
+    echo "Processing GC: $gc, Java Version: $java_version, Random count: $random_count"
 
     sdk use java $java_version
-    name=$(echo $gc)_$(echo $java_version)_$(echo $THREADS)_$(echo $MEM)
+    name=$(echo $THREADS)_$(echo $MEM)_$(echo $java_version)_$(echo $random_count)_$(echo $gc)
     export JFR_RECORDING=$(echo $name).jfr
-    # export RANDOM_COUNT=200
-    numactl --physcpubind=0-3 java -cp /Users/gunnarmorling/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:target/classes -Xmx$(echo $MEM)m -Xms$(echo $MEM)m -XX:+Use$(echo $gc)GC dev.morling.demos.AllocationTest > $(echo $name).hdr
+    export RANDOM_COUNT=$random_count
+
+    # numactl --physcpubind=0-3 java -cp /home/build/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:target/classes -Xmx$(echo $MEM)m -Xms$(echo $MEM)m -XX:+Use$(echo $gc)GC dev.morling.demos.AllocationTest > $(echo $name).hdr
+
+    java -cp /Users/gunnarmorling/.m2/repository/org/hdrhistogram/HdrHistogram/2.2.2/HdrHistogram-2.2.2.jar:target/classes -Xmx$(echo $MEM)m -Xms$(echo $MEM)m -XX:+Use$(echo $gc)GC dev.morling.demos.AllocationTest > $(echo $name).hdr
 done
