@@ -81,7 +81,7 @@ GCS=("Z" "G1" "Z")
 JAVA_VERSIONS=("21.0.6-tem" "25.ea.34-open" "25.ea.34-open")
 
 GCS=("G1" "Z" "G1" "Z")
-JAVA_VERSIONS=("25.ea.34-open" "25.ea.34-open" "25.ea.34-open" "25.ea.34-open")
+JAVA_VERSIONS=("25.ea.36-open" "25.ea.36-open" "25.ea.36-open" "25.ea.36-open")
 RANDOMS=("100" "100" "500" "500")
 
 # GCS=("Z")
